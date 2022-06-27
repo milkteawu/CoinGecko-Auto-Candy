@@ -10,32 +10,43 @@ chrome_options.add_argument("--no-sandbox")
 driver = webdriver.Chrome('chromedriver')
 
 # Test usage of selenium
-SLEEP_TIME = 5
+SLEEP_TIME = 10
+
+# Set website url
+url = 'https://www.coingecko.com/account/candy?locale=zh-tw'
 
 # Access Site
 try:
-    driver.get('https://www.coingecko.com/account/candy?locale=en')
+    driver.get(url)
     print('Successful Access Site')
     time.sleep(SLEEP_TIME)
 except BaseException:
-    print('Could not access https://www.coingecko.com/account/candy?locale=en')
+    print('Could not access' + url)
     exit(1001)
 
 # Login
 try:
-    driver.find_element_by_id("user_email").send_keys(os.environ.get("USEREMAIL"))
-    driver.find_element_by_id("user_password").send_keys(os.environ.get("PASSWORD"))
+    driver.find_element("id", "user_email").send_keys(os.environ.get("USEREMAIL"))     #os.environ.get("USEREMAIL")
+    driver.find_element("id", "user_password").send_keys(os.environ.get("PASSWORD"))
     time.sleep(SLEEP_TIME)
-    driver.find_element_by_xpath('//*[@id="new_user"]/input[8]').click()
+    driver.find_element("xpath", '//*[@id="new_user"]/input[8]').click()
     print('Successful Login')
     time.sleep(SLEEP_TIME)
 except BaseException:
     print('Cannot login')
     exit(1002)
 
+# Click cookie accept
+try:
+    driver.find_element("xpath", '//*[@id="cookie-notice"]/div/div/div/div/button').click()
+    print('cookie accept')
+    time.sleep(SLEEP_TIME)
+except Exception as e:
+    print('Can not accept cookie')
+
 # Click Daily Reward
 try:
-    driver.find_element_by_css_selector("body > div.container > div.row.mt-1 > div.col-lg-8.pl-lg-5.mt-lg-5.pt-lg-1 > div:nth-child(3) > div > form > input.btn.btn-primary.col-12.collect-candy-button").click()
+    driver.find_element("xpath", '/html/body/div[3]/div[3]/div[3]/div[3]/div/form/input[1]').click()
     time.sleep(SLEEP_TIME)
     print('Successful click Daily Reward')
 except Exception as e:
