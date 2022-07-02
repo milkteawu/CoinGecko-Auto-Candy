@@ -10,7 +10,7 @@ chrome_options.add_argument("--no-sandbox")
 driver = webdriver.Chrome('chromedriver')
 
 # Test usage of selenium
-SLEEP_TIME = 10
+SLEEP_TIME = 5
 
 # Set website url
 url = 'https://www.coingecko.com/account/candy?locale=zh-tw'
@@ -35,6 +35,7 @@ try:
 except BaseException:
     print('Cannot login')
     exit(1002)
+# geetest_radar_tip
 
 # Click cookie accept
 try:
